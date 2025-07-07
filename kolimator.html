@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolimator X-Ray - Teknologi Pencitraan Medis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #001a33 0%, #000d1a 100%);
+            color: #e6f7ff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header Section */
+        .header {
+            background: rgba(10, 30, 60, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            margin: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.3);
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 150, 255, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .collimator-animation {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .collimator-body {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, #0077cc 0%, #004c99 100%);
+            border-radius: 10px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 30px rgba(0, 200, 255, 0.6);
+            transform: rotateX(15deg) rotateY(15deg);
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .collimator-body:hover {
+            transform: rotateX(25deg) rotateY(25deg) translateZ(20px);
+        }
+
+        .collimator-blade {
+            position: absolute;
+            background: linear-gradient(45deg, #0066cc, #00aaff);
+            border: 1px solid rgba(100, 200, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.4);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .blade-top {
+            top: 0;
+            left: 25%;
+            width: 50%;
+            height: 20px;
+            transform-origin: center bottom;
+            animation: openTop 4s infinite alternate ease-in-out;
+        }
+
+        .blade-bottom {
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 20px;
+            transform-origin: center top;
+            animation: openBottom 4s infinite alternate ease-in-out;
+        }
+
+        .blade-left {
+            left: 0;
+            top: 25%;
+            width: 20px;
+            height: 50%;
+            transform-origin: right center;
+            animation: openLeft 4s infinite alternate ease-in-out;
+        }
+
+        .blade-right {
+            right: 0;
+            top: 25%;
+            width: 20px;
+            height: 50%;
+            transform-origin: left center;
+            animation: openRight 4s infinite alternate ease-in-out;
+        }
+
+        .aperture {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 100, 200, 0.2);
+            border: 2px solid rgba(0, 200, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.4);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .collimator-animation:hover .aperture {
+            width: 120px;
+            height: 120px;
+            border-color: rgba(0, 247, 255, 0.8);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.6);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #00aaff, #0077cc, #00f7ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            animation: textGlow 3s infinite alternate;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #c2e9ff;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: rgba(10, 30, 60, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            margin: 30px 0;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            animation: fadeInUp 1s ease-out;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #0077cc, #00aaff, #00f7ff);
+            opacity: 0.7;
+        }
+
+        .section:hover {
+            transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+            box-shadow: 0 20px 40px rgba(0, 100, 200, 0.5);
+            border-color: rgba(0, 247, 255, 0.6);
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: #00aaff;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            text-shadow: 0 0 10px rgba(0, 170, 255, 0.4);
+        }
+
+        .section h2::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #0077cc, transparent);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section h3 {
+            font-size: 1.8rem;
+            color: #4db8ff;
+            margin: 35px 0 20px 0;
+            padding-left: 15px;
+            border-left: 4px solid #0077cc;
+            animation: morphColor 6s infinite alternate;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            color: #e0f0ff;
+            margin-bottom: 25px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: rgba(20, 50, 90, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            perspective: 500px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 100, 200, 0.6);
+            border-color: rgba(0, 247, 255, 0.8);
+            background: rgba(30, 70, 120, 0.8);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0077cc, #00aaff);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #00f7ff;
+            box-shadow: 0 0 25px rgba(0, 119, 204, 0.6);
+            transform: translateZ(20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: translateZ(30px) scale(1.2);
+            box-shadow: 0 0 35px rgba(0, 170, 255, 0.8);
+        }
+
+        .feature-card h4 {
+            font-size: 1.5rem;
+            color: #80d4ff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(128, 212, 255, 0.3);
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #c2e9ff;
+            text-align: center;
+        }
+
+        /* Specifications Table */
+        .spec-table {
+            background: rgba(15, 40, 80, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 30px 0;
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        .spec-table:hover {
+            transform: rotateY(5deg) translateZ(10px);
+        }
+
+        .spec-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .spec-table th,
+        .spec-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(100, 200, 255, 0.2);
+        }
+
+        .spec-table th {
+            background: rgba(0, 119, 204, 0.4);
+            color: #00f7ff;
+            font-weight: 600;
+        }
+
+        .spec-table td {
+            color: #e0f0ff;
+        }
+
+        .spec-table tr:nth-child(even) {
+            background: rgba(20, 50, 100, 0.4);
+        }
+
+        /* Diagram Section */
+        .diagram-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(10, 30, 60, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+
+        .diagram-container:hover {
+            transform: translateY(-5px) rotateX(3deg);
+        }
+
+        .diagram {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: transform 0.5s ease;
+        }
+
+        .diagram:hover {
+            transform: scale(1.03) translateZ(10px);
+        }
+
+        .diagram-caption {
+            font-style: italic;
+            color: #80d4ff;
+            margin-top: 10px;
+            text-shadow: 0 0 8px rgba(128, 212, 255, 0.3);
+        }
+
+        /* FAQ Styles */
+        .faq-container {
+            max-width: 100%;
+            margin: 30px 0;
+        }
+
+        .faq-item {
+            background: rgba(15, 40, 80, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-8px) rotateX(3deg);
+            box-shadow: 0 15px 35px rgba(0, 100, 200, 0.5);
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background-color 0.3s ease;
+            background: rgba(20, 50, 100, 0.5);
+        }
+
+        .faq-question:hover {
+            background: rgba(30, 70, 120, 0.6);
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #80d4ff;
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            color: #00f7ff;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(0, 247, 255, 0.5);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.23, 1, 0.32, 1), padding 0.6s ease;
+            background: rgba(10, 30, 60, 0.5);
+            transform-origin: top;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 25px 25px 25px;
+        }
+
+        .faq-answer p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #e0f0ff;
+            text-align: justify;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 119, 204, 0.5), rgba(0, 170, 255, 0.5));
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            margin: 40px 0;
+            border: 1px solid rgba(100, 200, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 Q50,20 100,0 T100,100 Q50,80 0,100 Z" fill="rgba(100,200,255,0.1)"/></svg>');
+            background-size: cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #0077cc, #00aaff);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 119, 204, 0.5);
+            border: 1px solid rgba(0, 247, 255, 0.5);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(20px);
+            perspective: 500px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.8s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.05) translateZ(30px);
+            box-shadow: 0 15px 40px rgba(0, 170, 255, 0.7);
+            background: linear-gradient(45deg, #00aaff, #0077cc);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(5, 20, 40, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            margin: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+        }
+
+        .footer p {
+            color: #80d4ff;
+            font-size: 1rem;
+        }
+
+        /* Floating elements */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        .floating-1 { animation-delay: 0s; }
+        .floating-2 { animation-delay: 1s; }
+        .floating-3 { animation-delay: 2s; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0) rotateX(0) rotateY(0);
+            }
+            50% {
+                transform: translateY(-20px) rotateX(5deg) rotateY(5deg);
+            }
+        }
+
+        @keyframes textGlow {
+            0% {
+                text-shadow: 0 0 10px rgba(0, 170, 255, 0.3);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(0, 247, 255, 0.6), 0 0 30px rgba(0, 170, 255, 0.4);
+            }
+        }
+
+        @keyframes openTop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-60px); }
+        }
+
+        @keyframes openBottom {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(60px); }
+        }
+
+        @keyframes openLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-60px); }
+        }
+
+        @keyframes openRight {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(60px); }
+        }
+
+        @keyframes morphColor {
+            0% { color: #4db8ff; }
+            25% { color: #00aaff; }
+            50% { color: #00f7ff; }
+            75% { color: #00aaff; }
+            100% { color: #4db8ff; }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .header h1 {
+                font-size: 2.8rem;
+            }
+            .section {
+                padding: 30px;
+            }
+            .features-grid {
+                gap: 20px;
+            }
+            .collimator-animation {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header, .footer {
+                margin: 10px;
+                padding: 25px;
+            }
+            .header h1 {
+                font-size: 2.3rem;
+            }
+            .header p {
+                font-size: 1.1rem;
+            }
+            .collimator-animation {
+                width: 200px;
+                height: 200px;
+            }
+            .collimator-body {
+                width: 150px;
+                height: 150px;
+            }
+            .section {
+                padding: 25px 20px;
+            }
+            .section h2 {
+                font-size: 2rem;
+            }
+            .section h3 {
+                font-size: 1.5rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .feature-card {
+                padding: 25px;
+            }
+            .cta-section {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header p {
+                font-size: 1rem;
+            }
+            .collimator-animation {
+                width: 180px;
+                height: 180px;
+            }
+            .collimator-body {
+                width: 120px;
+                height: 120px;
+            }
+            .section {
+                padding: 20px 15px;
+            }
+            .section h2 {
+                font-size: 1.8rem;
+            }
+            .section h3 {
+                font-size: 1.3rem;
+            }
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            .feature-card h4 {
+                font-size: 1.3rem;
+            }
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particle-canvas"></div>
+    
+    <!-- Header Section -->
+    <div class="header floating floating-1">
+        <div class="collimator-animation">
+            <div class="collimator-body">
+                <div class="collimator-blade blade-top"></div>
+                <div class="collimator-blade blade-bottom"></div>
+                <div class="collimator-blade blade-left"></div>
+                <div class="collimator-blade blade-right"></div>
+                <div class="aperture"></div>
+            </div>
+        </div>
+        <h1>Kolimator X-Ray</h1>
+        <p>Komponen penting dalam sistem pencitraan medis yang mengontrol ukuran dan bentuk berkas sinar-X untuk meningkatkan kualitas gambar dan keselamatan pasien</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Pengenalan Section -->
+            <div class="section floating floating-2">
+                <h2>Apa itu Kolimator X-Ray?</h2>
+                <p>Kolimator adalah perangkat mekanis atau elektronik yang ditempatkan di jalur berkas sinar-X untuk membatasi ukuran dan bentuk berkas radiasi yang mencapai pasien. Dengan mengontrol ukuran lapangan penyinaran, kolimator membantu mengurangi dosis radiasi yang tidak perlu pada pasien dan meningkatkan kualitas gambar dengan mengurangi hamburan radiasi.</p>
+                
+                <p>Kolimator modern biasanya terdiri dari daun-daun logam (biasanya timah atau tungsten) yang dapat digerakkan secara independen untuk membentuk lapangan persegi panjang atau bahkan bentuk khusus yang sesuai dengan area anatomis yang akan diradiografi.</p>
+            </div>
+
+            <!-- Prinsip Kerja Section -->
+            <div class="section floating floating-3">
+                <h2>Prinsip Kerja Kolimator</h2>
+                
+                <h3>Kontrol Geometri Berkas</h3>
+                <p>Kolimator bekerja dengan memblokir bagian tepi berkas sinar-X yang tidak diinginkan menggunakan daun-daun logam yang dapat digerakkan. Daun-daun ini disusun berpasangan (atas-bawah dan kiri-kanan) untuk memungkinkan kontrol dua dimensi terhadap ukuran lapangan penyinaran.</p>
+                
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <svg width="100%" height="250" viewBox="0 0 600 250">
+                            <!-- X-ray Source -->
+                            <circle cx="100" cy="50" r="15" fill="#00aaff" filter="url(#glow)"/>
+                            <text x="100" y="30" fill="#80d4ff" text-anchor="middle">Sumber Sinar-X</text>
+                            
+                            <!-- Collimator -->
+                            <rect x="150" y="20" width="80" height="60" fill="#0077cc" opacity="0.7"/>
+                            <rect x="150" y="25" width="80" height="50" fill="#0066cc"/>
+                            
+                            <!-- Collimator Blades -->
+                            <rect x="150" y="25" width="80" height="5" fill="#00aaff"/>
+                            <rect x="150" y="70" width="80" height="5" fill="#00aaff"/>
+                            <rect x="150" y="25" width="5" height="50" fill="#00aaff"/>
+                            <rect x="225" y="25" width="5" height="50" fill="#00aaff"/>
+                            
+                            <!-- X-ray Beam -->
+                            <path d="M100,50 L150,50 L200,150 L250,200" stroke="#00f7ff" stroke-width="3" fill="none" stroke-dasharray="5,5"/>
+                            <polygon points="250,200 245,195 240,200" fill="#00f7ff"/>
+                            
+                            <!-- Patient -->
+                            <rect x="300" y="100" width="100" height="150" fill="rgba(200,200,255,0.3)" stroke="#80d4ff" stroke-width="2"/>
+                            <text x="350" y="270" fill="#80d4ff" text-anchor="middle">Pasien</text>
+                            
+                            <!-- Detector -->
+                            <rect x="300" y="260" width="100" height="10" fill="#004c99"/>
+                            <text x="350" y="285" fill="#80d4ff" text-anchor="middle">Detektor</text>
+                            
+                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </svg>
+                    </div>
+                    <p class="diagram-caption">Diagram Prinsip Kerja Kolimator pada Sistem X-Ray</p>
+                </div>
+
+                <h3>Pusat Otomatis</h3>
+                <p>Kolimator modern memiliki fitur "pusat otomatis" yang memastikan bahwa pusat lapangan penyinaran selalu sejajar dengan pusat detektor, terlepas dari ukuran lapangan yang dipilih. Hal ini dicapai dengan menggerakkan semua daun kolimator secara simetris terhadap sumbu pusat.</p>
+                
+                <h3>Lampu Lapangan dan Cermin</h3>
+                <p>Sebuah lampu dan sistem cermin dipasang di dalam kolimator untuk memproyeksikan gambaran visual dari ukuran lapangan penyinaran ke permukaan pasien. Hal ini membantu teknisi radiologi untuk memposisikan pasien dengan tepat sebelum eksposur dilakukan.</p>
+            </div>
+
+            <!-- Komponen Utama Section -->
+            <div class="section floating floating-1">
+                <h2>Komponen Utama Kolimator</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h4>Daun Kolimator</h4>
+                        <p>Pelat logam (biasanya timah atau tungsten) yang bergerak untuk membentuk lapangan penyinaran</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                        <h4>Lampu Lapangan</h4>
+                        <p>Lampu yang memproyeksikan gambaran visual dari ukuran lapangan ke pasien</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-mirror"></i></div>
+                        <h4>Cermin Setengah Perak</h4>
+                        <p>Cermin khusus yang memantulkan cahaya lampu tetapi meneruskan sinar-X</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+                        <h4>Mekanisme Penggerak</h4>
+                        <p>Sistem motor atau manual untuk menggerakkan daun kolimator</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-ruler-combined"></i></div>
+                        <h4>Indikator Ukuran Lapangan</h4>
+                        <p>Penanda digital atau mekanis yang menunjukkan dimensi lapangan</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-filter"></i></div>
+                        <h4>Filter Penyerap</h4>
+                        <p>Filter tambahan untuk menyerap radiasi energi rendah</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jenis Kolimator Section -->
+            <div class="section floating floating-2">
+                <h2>Jenis Kolimator X-Ray</h2>
+                
+                <h3>1. Kolimator Manual</h3>
+                <p>Digunakan pada perangkat radiografi portabel atau sederhana. Teknisi secara manual menggeser daun kolimator untuk mengatur ukuran lapangan. Umumnya memiliki akurasi ±5% dan memerlukan kalibrasi rutin.</p>
+
+                <h3>2. Kolimator Otomatis</h3>
+                <p>Diintegrasikan dengan sistem kontrol eksposur. Ukuran lapangan disesuaikan secara otomatis berdasarkan ukuran kaset atau detektor. Menggunakan motor servo dengan presisi ±1%.</p>
+
+                <h3>3. Kolimator Multileaf (MLC)</h3>
+                <p>Digunakan dalam radioterapi. Terdiri dari banyak daun tipis (hingga 120 daun) yang dapat membentuk lapangan sesuai kontur tumor. Presisi mencapai ±0.5mm.</p>
+
+                <div class="spec-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Jenis</th>
+                                <th>Presisi</th>
+                                <th>Pengaturan</th>
+                                <th>Aplikasi Utama</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Manual</td>
+                                <td>±5%</td>
+                                <td>Manual</td>
+                                <td>Radiografi Portabel</td>
+                            </tr>
+                            <tr>
+                                <td>Otomatis</td>
+                                <td>±1%</td>
+                                <td>Motorized</td>
+                                <td>Radiologi Umum, Fluoroskopi</td>
+                            </tr>
+                            <tr>
+                                <td>Multileaf (MLC)</td>
+                                <td>±0.5mm</td>
+                                <td>Kontrol Komputer</td>
+                                <td>Radioterapi, CT Simulator</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Manfaat Section -->
+            <div class="section floating floating-3">
+                <h2>Manfaat Penggunaan Kolimator</h2>
+                
+                <h3>Pengurangan Dosis Radiasi</h3>
+                <p>Kolimator dapat mengurangi dosis radiasi pada pasien hingga 60% dengan membatasi lapangan penyinaran hanya ke area anatomis yang diperlukan. Pengurangan luas lapangan dari 30x30cm menjadi 20x20cm mengurangi dosis hingga 55%.</p>
+                
+                <h3>Peningkatan Kualitas Gambar</h3>
+                <p>Dengan mengurangi radiasi hamburan, kolimator meningkatkan kontras dan resolusi gambar radiografi. Studi menunjukkan peningkatan rasio sinyal-ke-noise (SNR) hingga 40% dengan kolimasi yang tepat.</p>
+                
+                <h3>Pencegahan Penyinaran Berlebihan</h3>
+                <p>Kolimator mencegah penyinaran jaringan sensitif seperti kelenjar tiroid, gonad, dan lensa mata yang berada di luar area diagnostik yang dituju.</p>
+                
+                <h3>Peningkatan Akurasi Diagnostik</h3>
+                <p>Lapangan yang tepat membantu menghilangkan struktur yang mengganggu dari gambar, memungkinkan interpretasi yang lebih akurat oleh radiolog.</p>
+            </div>
+
+            <!-- Teknologi Terkini Section -->
+            <div class="section floating floating-1">
+                <h2>Teknologi Terkini</h2>
+                
+                <h3>Kolimator Digital</h3>
+                <p>Sistem yang sepenuhnya terintegrasi dengan workstation radiologi, memungkinkan kolimasi presisi berbasis gambar digital. Dapat menyimpan preset kolimasi untuk pemeriksaan rutin.</p>
+                
+                <h3>Kolimasi Berbasis AI</h3>
+                <p>Algoritma kecerdasan buatan yang mengenali anatomi pasien secara otomatis dan menyesuaikan kolimasi untuk optimasi dosis dan kualitas gambar.</p>
+                
+                <h3>Kolimator Adaptif</h3>
+                <p>Pada sistem fluoroskopi dan angiografi, kolimator dapat menyesuaikan lapangan secara real-time mengikuti pergerakan kateter atau alat intervensi.</p>
+                
+                <h3>Kolimator Virtual</h4>
+                <p>Pada sistem radiografi digital, kolimasi dapat dilakukan secara digital setelah eksposur, meskipun ini tidak mengurangi dosis radiasi pada pasien.</p>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="section floating floating-2">
+                <h2>Pertanyaan Umum (FAQ)</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Mengapa kolimator penting dalam radiografi?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Kolimator sangat penting karena tiga alasan utama: (1) Mengurangi dosis radiasi pada pasien dengan membatasi lapangan penyinaran hanya ke area yang diperlukan; (2) Meningkatkan kualitas gambar dengan mengurangi radiasi hamburan yang menyebabkan noise; (3) Melindungi jaringan sensitif di luar area diagnostik dari paparan radiasi yang tidak perlu.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Bagaimana kolimator memengaruhi dosis radiasi pada pasien?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Kolimator mengurangi dosis radiasi secara signifikan. Sebagai contoh, mengurangi ukuran lapangan dari 35×43 cm menjadi 25×30 cm dapat menurunkan dosis permukaan sekitar 40-50%. Pengurangan setiap 1 cm pada dimensi lapangan dapat menurunkan dosis sekitar 3-4%. Kolimasi yang tepat juga mengurangi volume jaringan yang terpapar, menurunkan dosis efektif keseluruhan.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Apa perbedaan antara kolimator primer dan sekunder?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Kolimator primer terletak dekat sumber sinar-X dan menentukan ukuran dasar berkas sinar. Kolimator sekunder (atau "light localizer") menggunakan sistem lampu dan cermin untuk memproyeksikan gambaran visual dari ukuran lapangan ke permukaan pasien. Pada sistem modern, keduanya terintegrasi dalam satu perangkat dengan kontrol yang terhubung.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Bagaimana kalibrasi kolimator dilakukan?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Kalibrasi kolimator meliputi: (1) Verifikasi keselarasan lampu lapangan dengan berkas sinar aktual menggunakan film radiografi atau detektor digital; (2) Pengukuran ketidaksesuaian (biasanya harus <2% SID); (3) Verifikasi akurasi indikator ukuran lapangan; (4) Pemeriksaan kesimetrisan daun kolimator. Kalibrasi harus dilakukan setahun sekali atau setelah perbaikan.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Apakah kolimator digunakan dalam CT scan?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Ya, CT scanner menggunakan dua jenis kolimator: (1) Kolimator sumber yang membentuk berkas sinar-X menjadi bentuk kipas (fan beam) atau kerucut (cone beam); (2) Kolimator detektor yang mengurangi radiasi hamburan sebelum mencapai detektor. Kolimasi yang tepat pada CT sangat penting untuk kualitas gambar dan pengurangan dosis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section floating floating-3">
+                <h2>Optimalkan Sistem Radiologi Anda</h2>
+                <p>Dapatkan kolimator presisi tinggi untuk meningkatkan kualitas gambar dan keselamatan pasien. Konsultasikan kebutuhan Anda dengan spesialis kami.</p>
+                <a href="#contact" class="cta-button">Konsultasi Teknis Gratis</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer floating floating-1">
+        <p>&copy; 2025 Advanced Collimator Technologies. Presisi dalam Setiap Sinar.</p>
+    </div>
+
+    <script>
+        // Initialize Three.js for 3D background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('particle-canvas').appendChild(renderer.domElement);
+
+        // Create particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 2000;
+        const posArray = new Float32Array(particlesCount * 3);
+        const colorArray = new Float32Array(particlesCount * 3);
+        
+        for(let i = 0; i < particlesCount * 3; i += 3) {
+            // Position
+            posArray[i] = (Math.random() - 0.5) * 50;
+            posArray[i + 1] = (Math.random() - 0.5) * 50;
+            posArray[i + 2] = (Math.random() - 0.5) * 50;
+            
+            // Color
+            colorArray[i] = Math.random() * 0.5 + 0.5; // Blue channel
+            colorArray[i + 1] = Math.random() * 0.7 + 0.3; // Green channel
+            colorArray[i + 2] = Math.random() * 0.9 + 0.1; // Red channel
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.1,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            sizeAttenuation: true
+        });
+        
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        camera.position.z = 5;
+        
+        // Animation for particles
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            
+            particlesMesh.rotation.x += 0.0005;
+            particlesMesh.rotation.y += 0.001;
+            
+            // Move particles in a wave pattern
+            const positions = particlesGeometry.attributes.position.array;
+            const time = Date.now() * 0.0005;
+            
+            for(let i = 0; i < particlesCount * 3; i += 3) {
+                positions[i + 1] += Math.sin(time + positions[i] * 0.1) * 0.01;
+            }
+            
+            particlesGeometry.attributes.position.needsUpdate = true;
+            
+            renderer.render(scene, camera);
+        }
+        
+        animateParticles();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // FAQ Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Create floating particles
+        function createFloatingParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = Math.random() * 10 + 5 + 'px';
+            particle.style.height = Math.random() * 10 + 5 + 'px';
+            particle.style.background = 'radial-gradient(circle, rgba(0,200,255,0.8), rgba(0,150,255,0.3))';
+            particle.style.borderRadius = '50%';
+            particle.style.boxShadow = '0 0 ' + (Math.random() * 15 + 10) + 'px rgba(0, 247, 255, 0.7)';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = '-50px';
+            particle.style.zIndex = '-1';
+            particle.style.opacity = '0';
+            particle.style.animation = `fall ${Math.random() * 10 + 5}s linear forwards`;
+            particle.style.transformStyle = 'preserve-3d';
+            
+            document.body.appendChild(particle);
+            
+            // Fade in
+            setTimeout(() => {
+                particle.style.opacity = '1';
+            }, 100);
+            
+            // Remove after animation
+            setTimeout(() => {
+                particle.remove();
+            }, 10000);
+        }
+
+        // Add animation for falling particles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to { 
+                    transform: translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Create particles periodically
+        setInterval(createFloatingParticle, 300);
+
+        // Initial particles
+        for (let i = 0; i < 30; i++) {
+            setTimeout(createFloatingParticle, i * 200);
+        }
+
+        // Animation for elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section, .feature-card').forEach(el => {
+            el.style.animation = 'fadeInUp 1s ease-out paused';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

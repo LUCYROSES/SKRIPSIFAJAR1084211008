@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATHODE - Sumber Elektron untuk Sistem X-Ray Berkualitas Tinggi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
+            color: #2c3e50;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Section */
+        .header {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            margin: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(230, 126, 34, 0.5);
+        }
+
+        .logo-inner {
+            width: 80px;
+            height: 80px;
+            background: rgba(211, 84, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .filament {
+            position: absolute;
+            width: 4px;
+            height: 60px;
+            background: #f1c40f;
+            border-radius: 2px;
+            box-shadow: 0 0 10px 3px rgba(241, 196, 15, 0.8);
+            animation: glow 2s infinite alternate;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #f39c12, #f1c40f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #ecf0f1;
+            max-width: 600px;
+            margin: 0 auto;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            margin: 30px 0;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 1s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+            border-color: rgba(241, 196, 15, 0.5);
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            color: #d35400;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #d35400, transparent);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section h3 {
+            font-size: 1.8rem;
+            color: #e67e22;
+            margin: 30px 0 15px 0;
+            border-left: 4px solid #d35400;
+            padding-left: 15px;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            border-color: rgba(241, 196, 15, 0.7);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f39c12, #d35400);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(211, 84, 0, 0.3);
+        }
+
+        .feature-card h4 {
+            font-size: 1.4rem;
+            color: #d35400;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #2c3e50;
+        }
+
+        /* Specifications Table */
+        .spec-table {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 30px 0;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .spec-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .spec-table th,
+        .spec-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(230, 126, 34, 0.2);
+        }
+
+        .spec-table th {
+            background: rgba(211, 84, 0, 0.15);
+            color: #d35400;
+            font-weight: 600;
+        }
+
+        .spec-table td {
+            color: #2c3e50;
+        }
+
+        .spec-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* FAQ Styles */
+        .faq-container {
+            max-width: 100%;
+            margin: 30px 0;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(211, 84, 0, 0.1);
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #d35400;
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .faq-icon {
+            font-size: 1rem;
+            color: #d35400;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 25px 25px 25px;
+        }
+
+        .faq-answer p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2c3e50;
+            text-align: justify;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            background: rgba(211, 84, 0, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            margin: 40px 0;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #d35400, #e67e22);
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(241, 196, 15, 0.5);
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+            background: linear-gradient(45deg, #e67e22, #d35400);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(211, 84, 0, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            margin: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            color: #fff;
+            font-size: 1rem;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px 1px rgba(241, 196, 15, 0.6);
+            }
+            to {
+                box-shadow: 0 0 15px 5px rgba(241, 196, 15, 0.9);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Particle styles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(241, 196, 15, 0.7);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 8s linear infinite;
+        }
+
+        /* iOS Specific Optimizations */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                -webkit-text-size-adjust: 100%;
+            }
+            
+            .section, .feature-card, .faq-item {
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .feature-card:hover,
+            .section:hover,
+            .faq-item:hover {
+                transform: none;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            }
+            
+            .cta-button:hover {
+                transform: none;
+            }
+        }
+
+        /* Mobile Phones (Portrait) */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+            
+            .header, .footer {
+                margin: 10px;
+                padding: 20px;
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+            
+            .header p {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 20px;
+            }
+            
+            .logo-inner {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .filament {
+                height: 45px;
+            }
+            
+            .main-content {
+                padding: 20px 10px;
+            }
+            
+            .section {
+                margin: 20px 0;
+                padding: 20px 15px;
+                border-radius: 20px;
+            }
+            
+            .section h2 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            
+            .section h3 {
+                font-size: 1.4rem;
+                margin: 20px 0 10px 0;
+            }
+            
+            .section p {
+                font-size: 0.95rem;
+                margin-bottom: 15px;
+                text-align: left;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 20px 0;
+            }
+            
+            .feature-card {
+                padding: 20px;
+                border-radius: 15px;
+            }
+            
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 15px;
+                font-size: 1.3rem;
+            }
+            
+            .feature-card h4 {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+            
+            .feature-card p {
+                font-size: 0.9rem;
+            }
+            
+            .spec-table {
+                overflow-x: auto;
+                border-radius: 10px;
+            }
+            
+            .spec-table th,
+            .spec-table td {
+                padding: 10px 8px;
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+            
+            .faq-question {
+                padding: 15px 20px;
+            }
+            
+            .faq-question h3 {
+                font-size: 1rem;
+                margin: 0;
+                padding-right: 15px;
+            }
+            
+            .faq-icon {
+                font-size: 0.9rem;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px 20px;
+            }
+            
+            .faq-answer p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+                text-align: left;
+            }
+            
+            .cta-section {
+                padding: 30px 20px;
+                margin: 20px 0;
+                border-radius: 20px;
+            }
+            
+            .cta-section h2 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            .cta-section p {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+            
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+                border-radius: 25px;
+            }
+        }
+
+        /* Mobile Phones (Landscape) */
+        @media screen and (max-width: 768px) and (orientation: landscape) {
+            .header {
+                padding: 25px;
+            }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        /* Tablets (Portrait) */
+        @media screen and (min-width: 481px) and (max-width: 768px) {
+            .header, .footer {
+                margin: 15px;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .section {
+                padding: 30px 25px;
+                margin: 25px 0;
+            }
+            
+            .section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .spec-table th,
+            .spec-table td {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+            
+            .faq-question {
+                padding: 18px 22px;
+            }
+            
+            .faq-question h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Tablets (Landscape) & Small Desktops */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .section {
+                padding: 35px 30px;
+            }
+        }
+
+        /* Large Tablets & iPads */
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                max-width: 95%;
+            }
+            
+            .header, .footer {
+                margin: 20px;
+            }
+        }
+
+        /* iPad Pro Specific */
+        @media screen 
+        and (min-device-width: 1024px) 
+        and (max-device-width: 1366px)
+        and (-webkit-min-device-pixel-ratio: 2) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 25px;
+            }
+            
+            .section {
+                padding: 40px 35px;
+            }
+        }
+
+        /* iPhone X and similar with notch */
+        @media screen 
+        and (device-width: 375px) 
+        and (device-height: 812px) 
+        and (-webkit-device-pixel-ratio: 3) {
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+            
+            .header {
+                margin-top: 20px;
+            }
+        }
+
+        /* iPhone Plus Series */
+        @media screen 
+        and (min-device-width: 414px) 
+        and (max-device-width: 414px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .section p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Improved Touch Targets */
+        @media (max-width: 768px) {
+            .faq-question {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .cta-button {
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Prevent zoom on input focus for iOS */
+            select, input, textarea {
+                font-size: 16px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(230, 126, 34, 0.6);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(230, 126, 34, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-inner">
+                <div class="filament"></div>
+            </div>
+        </div>
+        <h1>CATHODE</h1>
+        <p>Komponen X-ray yang berfungsi sebagai sumber elektron melalui emisi termionik, menghasilkan berkas elektron terfokus untuk menghasilkan sinar X pada anoda.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Pengenalan Section -->
+            <div class="section">
+                <h2>Apa itu CATHODE?</h2>
+                <p>Cathode adalah elektroda negatif dalam tabung sinar-X yang berfungsi menghasilkan elektron melalui pemanasan filamen. Ketika filamen dipanaskan hingga suhu tinggi (sekitar 2200°C), elektron-elektron terlepas dari permukaan filamen dan membentuk awan elektron di sekitar filamen. Dengan menerapkan tegangan tinggi antara cathode dan anode, elektron-elektron ini dipercepat menuju anoda.</p>
+                
+                <p>Cathode modern terdiri dari filamen tungsten yang dibentuk menjadi kumparan ganda (dual-focus) atau kumparan tunggal, ditempatkan dalam cup fokus yang terbuat dari molibdenum atau nikel. Cup ini berfungsi untuk memfokuskan berkas elektron ke area target pada anoda.</p>
+            </div>
+
+            <!-- Jenis Cathode Section -->
+            <div class="section">
+                <h2>Jenis-Jenis CATHODE</h2>
+                
+                <h3>1. Filamen Tunggal (Single Filament)</h3>
+                <p>Digunakan pada tabung sinar-X dengan satu ukuran fokus. Sederhana dan ekonomis, cocok untuk aplikasi radiografi umum dengan kebutuhan daya rendah hingga menengah.</p>
+
+                <h3>2. Filamen Ganda (Dual Filament)</h3>
+                <p>Memiliki dua filamen terpisah yang menghasilkan dua ukuran fokus (biasanya besar dan kecil). Filamen kecil digunakan untuk pencitraan resolusi tinggi, sedangkan filamen besar untuk aplikasi yang memerlukan daya lebih tinggi. Ini adalah desain paling umum dalam tabung sinar-X modern.</p>
+
+                <h3>3. Filamen Triplet (untuk CT Scan)</h3>
+                <p>Tabung CT modern kadang memiliki tiga filamen untuk meningkatkan redundansi dan umur tabung. Jika satu filamen gagal, tabung masih dapat beroperasi dengan filamen lainnya.</p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Emisi Elektron Stabil</h4>
+                        <p>Produksi elektron konsisten untuk kualitas gambar X-ray yang unggul</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h4>Fokus Presisi</h4>
+                        <p>Berkas elektron terfokus ke area target dengan akurasi tinggi</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⏳</div>
+                        <h4>Umur Panjang</h4>
+                        <p>Material berkualitas tinggi untuk operasi jangka panjang</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Material Cathode Section -->
+            <div class="section">
+                <h2>Material CATHODE</h2>
+                
+                <h3>Tungsten (W)</h3>
+                <p>Material filamen pilihan karena titik leleh tinggi (3410°C) dan ketahanan terhadap evaporasi. Tungsten memiliki fungsi kerja sekitar 4.5 eV, cocok untuk emisi termionik.</p>
+
+                <h3>Thorium Tungsten</h3>
+                <p>Paduan tungsten dengan 1-2% thorium oksida. Thorium mengurangi fungsi kerja menjadi sekitar 2.7 eV, memungkinkan emisi elektron lebih tinggi pada suhu yang lebih rendah, sehingga memperpanjang umur filamen.</p>
+
+                <h3>Rhenium Tungsten</h3>
+                <p>Paduan 3-5% rhenium meningkatkan daktilitas dan ketahanan terhadap siklus termal, mengurangi risiko keretakan filamen.</p>
+
+                <div class="spec-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Fungsi Kerja (eV)</th>
+                                <th>Titik Leleh (°C)</th>
+                                <th>Aplikasi Utama</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tungsten</td>
+                                <td>4.5</td>
+                                <td>3.410</td>
+                                <td>Radiografi Umum</td>
+                            </tr>
+                            <tr>
+                                <td>Thorium Tungsten</td>
+                                <td>2.7</td>
+                                <td>3.410</td>
+                                <td>Tabung Daya Tinggi</td>
+                            </tr>
+                            <tr>
+                                <td>Rhenium Tungsten</td>
+                                <td>4.5</td>
+                                <td>3.410</td>
+                                <td>CT Scan, Fluoroskopi Intensif</td>
+                            </tr>
+                            <tr>
+                                <td>Karbon Nanotube</td>
+                                <td>4.6-5.0</td>
+                                <td>3.650 (sublimasi)</td>
+                                <td>Teknologi Masa Depan</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Prinsip Kerja Section -->
+            <div class="section">
+                <h2>Prinsip Kerja CATHODE</h2>
+                
+                <h3>Emisi Termionik</h3>
+                <p>Ketika arus listrik (biasanya 3-6 A) dialirkan melalui filamen, filamen memanas dan elektron mendapatkan energi untuk mengatasi fungsi kerja material. Elektron yang terlepas membentuk awan elektron (space charge) di sekitar filamen.</p>
+                
+                <h3>Efek Space Charge</h3>
+                <p>Pada tegangan rendah (< 40 kV), awan elektron membatasi jumlah elektron yang dapat dipercepat menuju anoda. Efek ini penting dalam operasi fluoroskopi di mana kV rendah digunakan.</p>
+                
+                <h3>Fokus Elektron</h3>
+                <p>Cup fokus (biasanya pada potensial katoda) membentuk medan elektrostatik yang memfokuskan berkas elektron ke area target pada anoda. Desain cup sangat mempengaruhi ukuran dan bentuk fokus.</p>
+                
+                <h3>Faktor yang Mempengaruhi Emisi</h3>
+                <p><strong>Arus Filamen:</strong> Menentukan suhu filamen dan jumlah elektron yang diemisikan.</p>
+                <p><strong>Tegangan Tabung (kV):</strong> Menentukan kecepatan elektron dan kemampuan penetrasi sinar X.</p>
+                <p><strong>Fungsi Kerja Material:</strong> Material dengan fungsi kerja lebih rendah menghasilkan lebih banyak elektron pada suhu yang sama.</p>
+            </div>
+
+            <!-- Aplikasi Klinis Section -->
+            <div class="section">
+                <h2>Aplikasi Klinis CATHODE</h2>
+                
+                <h3>Radiografi Konvensional</h3>
+                <p>Cathode filamen ganda dengan fokus 0.5-1.2 mm digunakan untuk sebagian besar pemeriksaan. Fokus kecil untuk detail tinggi, fokus besar untuk area besar atau teknik tinggi.</p>
+                
+                <h3>Fluoroskopi</h3>
+                <p>Memerlukan emisi elektron yang stabil dalam periode panjang. Filamen dirancang khusus untuk operasi continuous dengan pendinginan yang memadai.</p>
+                
+                <h3>Computed Tomography (CT)</h3>
+                <p>Tabung CT modern menggunakan cathode dengan tiga filamen untuk meningkatkan keandalan. Sistem pemanas yang presisi memungkinkan switching cepat antara berbagai tingkat daya.</p>
+                
+                <h3>Mammografi</h3>
+                <p>Menggunakan fokus kecil (0.1-0.3 mm) untuk menangkap detail halus seperti mikrokalsifikasi. Emisi elektron harus sangat stabil untuk kontras tinggi.</p>
+            </div>
+
+            <!-- Teknologi Terkini Section -->
+            <div class="section">
+                <h2>Teknologi Terkini dalam CATHODE</h2>
+                
+                <h3>Carbon Nanotube Cathode</h3>
+                <p>Teknologi baru yang menggunakan carbon nanotube sebagai sumber elektron. Tidak memerlukan pemanasan, sehingga instan on/off dan sangat tahan lama. Cocok untuk portable X-ray dan CT real-time.</p>
+                
+                <h3>Field Emission Cathode</h3>
+                <p>Emisi elektron menggunakan medan listrik tinggi tanpa pemanasan. Memungkinkan switching sangat cepat (nanodetik) dan kontrol presisi berkas elektron.</p>
+                
+                <h3>Smart Filament Monitoring</h3>
+                <p>Sistem sensor cerdas memantau ketebalan filamen secara real-time, memprediksi umur sisa dan mencegah kegagalan tak terduga.</p>
+                
+                <h3>Dual-Focus Triode Design</h3>
+                <p>Desain tabung dengan elektroda ketiga (grid) yang memungkinkan modulasi cepat berkas elektron tanpa mengubah arus filamen, meningkatkan akurasi dan mengurangi lag.</p>
+            </div>
+
+            <!-- Maintenance dan Perawatan Section -->
+            <div class="section">
+                <h2>Maintenance dan Perawatan CATHODE</h2>
+                
+                <h3>Pemanasan Filamen</h3>
+                <p>Protokol warm-up yang benar sangat penting untuk mencegah thermal shock. Pemanasan bertahap dari suhu ruang ke suhu operasional memperpanjang umur filamen.</p>
+                
+                <h3>Monitoring Arus Filamen</h3>
+                <p>Setiap perubahan arus filamen dapat mengindikasikan penipisan filamen. Pemantauan terus menerus membantu menjadwalkan penggantian sebelum kegagalan.</p>
+                
+                <h3>Pembersihan Deposit</h3>
+                <p>Deposit tungsten dari filamen yang menguap dapat menyebabkan arcing. Pembersihan berkala dengan protokol khusus diperlukan.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h4>Protokol Warm-up</h4>
+                        <p>Prosedur pemanasan yang benar untuk memperpanjang umur</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h4>Monitoring Cerdas</h4>
+                        <p>Sistem pemantauan real-time untuk kinerja optimal</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h4>Kalibrasi Fokus</h4>
+                        <p>Penyesuaian presisi untuk akurasi berkas elektron</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="section">
+                <h2>Pertanyaan Umum (FAQ)</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Mengapa tungsten menjadi material utama untuk filamen cathode?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Tungsten dipilih karena memiliki titik leleh sangat tinggi (3410°C), ketahanan terhadap evaporasi, dan fungsi kerja yang sesuai untuk emisi termionik. Kombinasi sifat ini memungkinkan filamen beroperasi pada suhu tinggi yang diperlukan untuk emisi elektron, sambil mempertahankan integritas struktural dalam jangka panjang.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Apa perbedaan antara cathode filamen tunggal dan ganda?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Cathode filamen tunggal memiliki satu kumparan filamen yang menghasilkan satu ukuran fokus, cocok untuk aplikasi dasar. Sedangkan cathode filamen ganda memiliki dua filamen terpisah yang menghasilkan dua ukuran fokus berbeda - fokus kecil untuk detail tinggi dan fokus besar untuk aplikasi daya tinggi. Desain ganda lebih fleksibel dan merupakan standar dalam radiografi modern.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Berapa suhu operasional filamen cathode?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Filamen cathode biasanya beroperasi pada suhu sekitar 2200°C. Pada suhu ini, tungsten berpijar putih dan mampu mengemisikan elektron dalam jumlah cukup untuk produksi sinar X. Suhu ini cukup tinggi untuk emisi elektron tetapi masih di bawah titik leleh tungsten (3410°C), memastikan umur operasional yang panjang.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Mengapa protokol warm-up penting untuk cathode?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Protokol warm-up secara bertahap meningkatkan suhu filamen dari suhu ruang ke suhu operasional. Ini mencegah thermal shock yang dapat menyebabkan keretakan filamen akibat ekspansi termal yang tiba-tiba. Warm-up yang benar memperpanjang umur filamen secara signifikan dan menjaga stabilitas emisi elektron.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Apa yang dimaksud dengan efek space charge?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Efek space charge terjadi ketika awan elektron yang terbentuk di sekitar filamen menghambat pelepasan elektron lebih lanjut. Pada tegangan tabung rendah (<40kV), efek ini membatasi arus tabung maksimum. Dalam fluoroskopi, efek ini penting karena menentukan karakteristik operasi pada kV rendah.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Bagaimana cup fokus pada cathode bekerja?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Cup fokus adalah komponen logam (biasanya molibdenum) yang mengelilingi filamen. Dengan menerapkan potensial negatif yang sama dengan cathode, cup membentuk medan elektrostatik yang memfokuskan berkas elektron ke area target pada anoda. Desain geometri cup menentukan ukuran dan bentuk fokus elektron, yang secara langsung mempengaruhi resolusi gambar sinar X.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Apa keuntungan carbon nanotube cathode?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Carbon nanotube cathode menawarkan beberapa keunggulan: (1) Tidak memerlukan pemanasan sehingga instan on/off, (2) Sangat tahan lama karena tidak ada evaporasi material, (3) Memungkinkan modulasi elektron yang sangat cepat (nanodetik), (4) Efisiensi energi lebih tinggi. Teknologi ini sangat menjanjikan untuk CT real-time dan perangkat portabel.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Berapa umur operasional khas cathode?</h3>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Umur cathode bervariasi tergantung penggunaan dan pemeliharaan. Pada radiografi umum, cathode dapat bertahan 5-10 tahun. Pada CT scan intensif, umur mungkin 3-5 tahun. Faktor penentu termasuk jumlah eksposur, protokol warm-up, beban panas, dan kualitas pemeliharaan. Filamen biasanya menjadi lebih tipis dari waktu ke waktu karena evaporasi tungsten.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h2>Pelajari Lebih Lanjut</h2>
+                <p>Ingin mengetahui lebih detail tentang teknologi CATHODE dan aplikasinya dalam sistem X-ray? Hubungi kami untuk konsultasi teknis dan solusi yang sesuai dengan kebutuhan Anda.</p>
+                <a href="#contact" class="cta-button">Konsultasi Sekarang</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 CATHODE Technology. Semua hak dilindungi. Teknologi X-ray untuk masa depan yang lebih baik.</p>
+    </div>
+
+    <script>
+        // Mobile-specific optimizations
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        
+        // Create particles
+        function createParticle() {
+            if (document.visibilityState !== 'visible') return;
+            
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px';
+            particle.style.opacity = Math.random() * 0.5 + 0.3;
+            particle.style.width = (Math.random() * 5 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            
+            document.body.appendChild(particle);
+            
+            // Remove particle after animation completes
+            setTimeout(() => {
+                particle.remove();
+            }, 12000);
+        }
+        
+        // Create particles periodically
+        setInterval(createParticle, 500);
+        
+        // Touch-friendly FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', (e) => {
+                e.preventDefault();
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 1s ease-in-out';
+                document.body.style.opacity = '1';
+                
+                // Create initial particles
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => createParticle(), i * 100);
+                }
+            }, 100);
+        });
+        
+        // Viewport height fix for mobile browsers
+        function setViewportHeight() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        setViewportHeight();
+        window.addEventListener('resize', setViewportHeight);
+        window.addEventListener('orientationchange', setViewportHeight);
+        
+        // Prevent zoom on double tap for iOS
+        if (isIOS) {
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function (event) {
+                let now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        }
+        
+        // Interactive hover effects for feature cards (desktop only)
+        if (!isMobile) {
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                    this.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.25)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+            });
+        }
+    </script>
+</body>
+</html>

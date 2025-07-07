@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Pendingin Tabung Sinar-X - Teknologi & Prinsip Kerja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066cc;
+            --secondary: #00a8e8;
+            --accent: #ff6b35;
+            --dark: #1a2a3a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #28a745;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 168, 232, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            color: white;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            position: relative;
+        }
+
+        .logo-icon i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e0f7fa;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-image {
+            margin-top: 50px;
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            z-index: 1;
+        }
+
+        .cooling-system {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .xray-tube {
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            border-radius: 100px 100px 20px 20px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        .cooling-jacket {
+            position: absolute;
+            width: 250px;
+            height: 350px;
+            background: rgba(0, 168, 232, 0.1);
+            border: 2px solid rgba(0, 168, 232, 0.3);
+            border-radius: 120px 120px 30px 30px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .cooling-fluid {
+            position: absolute;
+            width: 240px;
+            height: 340px;
+            background: rgba(0, 168, 232, 0.2);
+            border-radius: 115px 115px 25px 25px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            animation: fluidFlow 8s infinite linear;
+        }
+
+        .cooling-pipes {
+            position: absolute;
+            width: 400px;
+            height: 150px;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .pipe {
+            position: absolute;
+            background: #4a6491;
+            border-radius: 10px;
+        }
+
+        .pipe-main {
+            width: 300px;
+            height: 20px;
+            bottom: 0;
+            left: 50px;
+        }
+
+        .pipe-connector {
+            width: 20px;
+            height: 70px;
+            bottom: 20px;
+            left: 170px;
+        }
+
+        .cooling-fins {
+            position: absolute;
+            width: 350px;
+            height: 100px;
+            background: repeating-linear-gradient(
+                to right,
+                #2c3e50,
+                #2c3e50 10px,
+                #4a6491 10px,
+                #4a6491 20px
+            );
+            border-radius: 10px;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 168, 232, 0.3);
+        }
+
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+            z-index: -1;
+        }
+
+        .feature-card:hover:before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 168, 232, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: rgba(0, 168, 232, 0.2);
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .feature-card p {
+            color: #cce7ff;
+        }
+
+        /* Technology Section */
+        .tech-container {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .tech-image {
+            flex: 1;
+            position: relative;
+            height: 400px;
+        }
+
+        .tech-content {
+            flex: 1;
+        }
+
+        .tech-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .tech-content p {
+            margin-bottom: 20px;
+            color: #cce7ff;
+        }
+
+        .tech-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .tech-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .tech-list i {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        /* Specs Section */
+        .specs-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .spec-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 168, 232, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .spec-text h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .spec-text p {
+            color: #cce7ff;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Case Studies */
+        .case-studies-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 50px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: thin;
+        }
+
+        .case-study {
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .case-study-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .case-study-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--secondary);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .case-study-info h4 {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .case-study-info p {
+            color: var(--secondary);
+        }
+
+        .case-study-text {
+            color: #cce7ff;
+        }
+
+        /* Diagram Section */
+        .diagram-section {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            border-radius: 20px;
+            padding: 60px;
+            text-align: center;
+            margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diagram-section:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+
+        .diagram-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .diagram-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .diagram-section p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #e0f7fa;
+            font-size: 1.1rem;
+        }
+
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .cooling-diagram {
+            width: 100%;
+            max-width: 800px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diagram-component {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            padding: 10px;
+            z-index: 3;
+        }
+
+        .cooling-line {
+            position: absolute;
+            background: var(--secondary);
+            z-index: 1;
+        }
+
+        .cooling-flow {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--accent);
+            border-radius: 50%;
+            z-index: 2;
+            animation: flowAnimation 8s linear infinite;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 20, 30, 0.9);
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #aab7c4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links a i {
+            margin-right: 10px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .contact-info {
+            color: #aab7c4;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--secondary);
+            margin-top: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aab7c4;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fluidFlow {
+            0% { background: rgba(0, 168, 232, 0.2); }
+            50% { background: rgba(0, 168, 232, 0.3); }
+            100% { background: rgba(0, 168, 232, 0.2); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes flowAnimation {
+            0% { transform: translate(0, 0); opacity: 0; }
+            5% { opacity: 1; }
+            95% { opacity: 1; }
+            100% { transform: translate(750px, 150px); opacity: 0; }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .tech-container {
+                flex-direction: column;
+            }
+            
+            .tech-image {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 20px;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 25, 47, 0.95);
+                flex-direction: column;
+                padding: 20px 0;
+                text-align: center;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                text-align: center;
+                padding-top: 120px;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+            }
+            
+            .hero-image {
+                position: relative;
+                width: 100%;
+                max-width: 100%;
+                transform: none;
+                margin-top: 50px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .diagram-section {
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
+            
+            .specs-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles"></div>
+    
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="logo-text">Sistem<span>Pendingin</span></div>
+            </div>
+            
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#hero">Beranda</a></li>
+                    <li><a href="#features">Prinsip Kerja</a></li>
+                    <li><a href="#technology">Teknologi</a></li>
+                    <li><a href="#specs">Spesifikasi</a></li>
+                    <li><a href="#case-studies">Studi Kasus</a></li>
+                </ul>
+                <button class="mobile-menu-btn" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Sistem Pendingin untuk Tabung Sinar-X</h1>
+                <p>Teknologi pendinginan merupakan komponen kritis dalam operasi tabung sinar-X medis. Sistem ini menjaga suhu optimal untuk memastikan kinerja konsisten, akurasi diagnostik, dan umur panjang peralatan radiologi.</p>
+            </div>
+            
+            <div class="hero-image">
+                <div class="cooling-system">
+                    <div class="xray-tube"></div>
+                    <div class="cooling-jacket"></div>
+                    <div class="cooling-fluid"></div>
+                    <div class="cooling-pipes">
+                        <div class="pipe pipe-main"></div>
+                        <div class="pipe pipe-connector"></div>
+                    </div>
+                    <div class="cooling-fins"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <h2 class="section-title">Prinsip Kerja Sistem Pendingin</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card floating">
+                    <div class="feature-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>Transfer Panas</h3>
+                    <p>Panas yang dihasilkan oleh tabung sinar-X dipindahkan melalui konduksi ke jaket pendingin yang mengelilingi tabung. Cairan pendingin mengalir melalui jaket ini menyerap panas.</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 0.2s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3>Sirkulasi Cairan</h3>
+                    <p>Cairan pendingin bersuhu rendah dipompa melalui sistem sirkulasi tertutup. Setelah menyerap panas dari tabung, cairan mengalir ke unit penukar panas untuk didinginkan kembali.</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 0.4s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h3>Penukaran Panas</h3>
+                    <p>Unit penukar panas menggunakan kombinasi radiator dan kipas untuk mendinginkan cairan sebelum dikembalikan ke tabung. Pada sistem canggih, teknologi Peltier juga digunakan.</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 0.6s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h3>Kontrol Suhu</h3>
+                    <p>Sensor suhu memantau kondisi tabung secara real-time. Kontroler PID mengatur kecepatan pompa dan pendingin untuk menjaga suhu dalam rentang optimal (±0.5°C).</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 0.8s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Proteksi Termal</h3>
+                    <p>Sistem memiliki lapisan proteksi multi-level yang akan menghentikan operasi jika suhu melebihi ambang batas aman, mencegah kerusakan komponen akibat panas berlebih.</p>
+                </div>
+                
+                <div class="feature-card floating" style="animation-delay: 1s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Desain Modular</h3>
+                    <p>Komponen didesain modular untuk memudahkan perawatan dan penggantian. Sistem pendingin sekunder dapat diaktifkan jika modul utama mengalami masalah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" style="background: rgba(0, 0, 0, 0.3);">
+        <div class="container">
+            <h2 class="section-title">Teknologi Pendingin Modern</h2>
+            
+            <div class="tech-container">
+                <div class="tech-image">
+                    <div class="cooling-system">
+                        <div class="xray-tube"></div>
+                        <div class="cooling-jacket"></div>
+                        <div class="cooling-fluid"></div>
+                        <div class="cooling-pipes">
+                            <div class="pipe pipe-main"></div>
+                            <div class="pipe pipe-connector"></div>
+                        </div>
+                        <div class="cooling-fins"></div>
+                    </div>
+                </div>
+                
+                <div class="tech-content">
+                    <h3>Evolusi Teknologi Pendinginan Radiologi</h3>
+                    <p>Sistem pendingin tabung sinar-X telah berkembang dari pendinginan udara sederhana menjadi sistem cairan berkinerja tinggi dengan kontrol presisi. Cairan pendingin modern dirancang untuk efisiensi termal maksimal dan stabilitas jangka panjang.</p>
+                    <p>Sirkulasi tertutup memastikan tidak ada kontaminasi dan meminimalkan kebutuhan perawatan. Teknologi saat ini mampu memberikan pendinginan konsisten bahkan dalam kondisi operasi intensif.</p>
+                    
+                    <ul class="tech-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Pendinginan Zona Ganda</strong>
+                                <p>Mengidentifikasi dan mendinginkan area kritis dengan presisi untuk mencegah titik panas (hot spots)</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Pemantauan Real-time</strong>
+                                <p>Sensor pintar terintegrasi memberikan data suhu secara real-time dan peringatan dini untuk masalah potensial</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Material Termal Unggul</strong>
+                                <p>Penggunaan paduan tembaga-beryllium dan lapisan keramik untuk konduktivitas termal tinggi dan ketahanan korosi</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Kontrol Adaptif</strong>
+                                <p>Algoritma AI yang mengoptimalkan kinerja pendinginan berdasarkan beban kerja dan kondisi lingkungan</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specifications Section -->
+    <section id="specs">
+        <div class="container">
+            <h2 class="section-title">Parameter Teknis Sistem</h2>
+            
+            <div class="specs-container">
+                <div class="spec-grid">
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-temperature-low"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Kisaran Suhu Operasi</h4>
+                            <p>15°C - 35°C (±0.5°C)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Kapasitas Pendinginan</h4>
+                            <p>2500W - 5000W (tergantung model)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Laju Aliran Cairan</h4>
+                            <p>8-12 liter per menit</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Konsumsi Daya</h4>
+                            <p>300W - 700W</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-weight"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Berat Sistem</h4>
+                            <p>25kg - 55kg</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-ruler-combined"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Dimensi (PxLxT)</h4>
+                            <p>50x40x80 cm</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Waktu Respons</h4>
+                            <p>< 5 detik untuk stabilisasi suhu</p>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="spec-text">
+                            <h4>Standar Keselamatan</h4>
+                            <p>IEC 60601-1, ISO 13485</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section id="case-studies" style="background: rgba(0, 0, 0, 0.3);">
+        <div class="container">
+            <h2 class="section-title">Studi Kasus Implementasi</h2>
+            
+            <div class="case-studies-container">
+                <div class="case-study">
+                    <div class="case-study-header">
+                        <div class="case-study-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="case-study-info">
+                            <h4>Rumah Sakit Pendidikan</h4>
+                            <p>Pusat Radiologi Intensif</p>
+                        </div>
+                    </div>
+                    <div class="case-study-text">
+                        <p>Implementasi sistem pendingin generasi ketiga di pusat radiologi dengan beban kerja tinggi. Hasil pengamatan menunjukkan penurunan suhu operasional rata-rata dari 42°C menjadi 32°C, dengan peningkatan waktu operasional perangkat sebesar 40%.</p>
+                        <p>Penggunaan cairan pendingin berbasis glikol dengan titik didih tinggi memungkinkan operasi stabil meskipun dalam lingkungan dengan suhu ambient mencapai 30°C.</p>
+                    </div>
+                </div>
+                
+                <div class="case-study">
+                    <div class="case-study-header">
+                        <div class="case-study-icon">
+                            <i class="fas fa-clinic-medical"></i>
+                        </div>
+                        <div class="case-study-info">
+                            <h4>Klinik Spesialis</h4>
+                            <p>Operasi Berkelanjutan</p>
+                        </div>
+                    </div>
+                    <div class="case-study-text">
+                        <p>Sistem pendingin dengan desain kompak untuk ruang terbatas. Menggunakan teknologi penukar panas mikro-kanal yang meningkatkan efisiensi pendinginan sebesar 25% dibandingkan desain konvensional.</p>
+                        <p>Integrasi sistem pemantauan jarak jauh memungkinkan tim teknis memantau performa tanpa mengganggu operasi klinik. Sistem mampu beroperasi terus menerus selama 12 jam dengan fluktuasi suhu kurang dari ±1°C.</p>
+                    </div>
+                </div>
+                
+                <div class="case-study">
+                    <div class="case-study-header">
+                        <div class="case-study-icon">
+                            <i class="fas fa-ambulance"></i>
+                        </div>
+                        <div class="case-study-info">
+                            <h4>Unit Radiologi Mobile</h4>
+                            <p>Operasi dalam Kondisi Ekstrem</p>
+                        </div>
+                    </div>
+                    <div class="case-study-text">
+                        <p>Sistem pendingin tahan guncangan untuk aplikasi mobile. Menggunakan pompa magnetik bebas perawatan dan pendingin berbasis minyak mineral yang stabil pada rentang suhu -10°C hingga 45°C.</p>
+                        <p>Desain kedap udara mencegah kontaminasi dan degradasi cairan pendingin. Uji lapangan menunjukkan keandalan sistem dalam kondisi jalan bergelombang dan lingkungan berdebu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diagram Section -->
+    <section>
+        <div class="container">
+            <div class="diagram-section">
+                <div class="diagram-content">
+                    <h2>Diagram Sistem Pendingin Terintegrasi</h2>
+                    <p>Representasi visual aliran panas dan cairan dalam sistem pendingin tabung sinar-X modern</p>
+                    
+                    <div class="diagram-container">
+                        <div class="cooling-diagram">
+                            <!-- Komponen sistem pendingin -->
+                            <div class="diagram-component" style="width: 150px; height: 70px; top: 20px; left: 50px;">
+                                Reservoir Cairan
+                            </div>
+                            <div class="diagram-component" style="width: 120px; height: 70px; top: 20px; left: 250px;">
+                                Pompa Sirkulasi
+                            </div>
+                            <div class="diagram-component" style="width: 160px; height: 90px; top: 120px; left: 500px;">
+                                Tabung Sinar-X<br>(dengan Jaket Pendingin)
+                            </div>
+                            <div class="diagram-component" style="width: 150px; height: 70px; top: 220px; left: 250px;">
+                                Penukar Panas
+                            </div>
+                            <div class="diagram-component" style="width: 120px; height: 70px; top: 220px; left: 50px;">
+                                Kipas Pendingin
+                            </div>
+                            
+                            <!-- Garis aliran -->
+                            <div class="cooling-line" style="top: 55px; left: 200px; width: 50px; height: 2px;"></div>
+                            <div class="cooling-line" style="top: 55px; left: 370px; width: 130px; height: 2px; transform: rotate(45deg);"></div>
+                            <div class="cooling-line" style="top: 165px; left: 370px; width: 130px; height: 2px; transform: rotate(-45deg);"></div>
+                            <div class="cooling-line" style="top: 255px; left: 200px; width: 50px; height: 2px;"></div>
+                            <div class="cooling-line" style="top: 255px; left: 50px; width: 120px; height: 2px; transform: rotate(90deg);"></div>
+                            <div class="cooling-line" style="top: 255px; left: 50px; height: 235px; width: 2px;"></div>
+                            <div class="cooling-line" style="top: 255px; left: 50px; height: 2px; width: 120px;"></div>
+                            
+                            <!-- Anak panah aliran -->
+                            <div class="cooling-flow" style="animation-delay: 0s;"></div>
+                            <div class="cooling-flow" style="animation-delay: 1s;"></div>
+                            <div class="cooling-flow" style="animation-delay: 2s;"></div>
+                            <div class="cooling-flow" style="animation-delay: 3s;"></div>
+                            <div class="cooling-flow" style="animation-delay: 4s;"></div>
+                            <div class="cooling-flow" style="animation-delay: 5s;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Tentang Teknologi</h3>
+                    <p style="color: #aab7c4; margin-bottom: 20px;">Sistem pendingin tabung sinar-X merupakan teknologi kritis dalam radiologi medis modern. Pengembangan terus dilakukan untuk meningkatkan efisiensi termal, keandalan, dan keselamatan perangkat.</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 Informasi Teknologi Radiologi. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+            const icon = menuToggle.querySelector('i');
+            if (navMenu.classList.contains('show')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navMenu.classList.contains('show')) {
+                        navMenu.classList.remove('show');
+                        const icon = menuToggle.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                }
+            });
+        });
+        
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 20 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // Random animation
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles
+        createParticles();
+        
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.feature-card, .spec-item');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight * 0.9) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // Set initial state for animated elements
+        document.querySelectorAll('.feature-card, .spec-item').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+        
+        // Listen for scroll events
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Initialize on load
+        window.addEventListener('load', () => {
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>SIMULASI XRAY</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playball&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/owl.carousel.min.css" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary" role="status"></div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar start -->
+        <div class="container-fluid nav-bar">
+            <div class="container">
+                <nav class="navbar navbar-light navbar-expand-lg py-4">
+                    <a href="index.html" class="navbar-brand">
+                        <h1 class="text-primary fw-bold mb-0">SIMULASI<span class="text-dark">XRAY</span> </h1>
+                    </a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="about.html" class="nav-item nav-link">Our Team</a>
+                            <a href="/roentgen_simulasi/web/index.html" class="nav-item nav-link">Simulasi</a>
+                            <!-- <a href="event.html" class="nav-item nav-link">MAKER</a>
+                            <a href="menu.html" class="nav-item nav-link">parts</a> -->
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Menu</a>
+                                <div class="dropdown-menu bg-light">
+                                    <!-- <a href="book.html" class="dropdown-item">FISRT</a> -->
+                                    <!-- <a href="blog.html" class="dropdown-item">href ganti</a> -->
+                                    <a href="about.html" class="dropdown-item">Our Team</a>
+                                    <!-- <a href="testimonial.html" class="dropdown-item">href aja ganti</a> -->
+                                    <a href="index.html" class="dropdown-item active">home </a>
+                                </div>
+                            </div>
+                            <a href="#" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <!-- <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
+                        <a href="" class="btn btn-primary py-2 px-4 d-none d-xl-inline-block rounded-pill">Book Now</a> -->
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+
+
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input type="search" class="form-control bg-transparent p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+
+        <!-- Hero Start -->
+        <div class="container-fluid bg-light py-6 my-6 mt-0">
+            <div class="container text-center animated bounceInDown">
+                <h1 class="display-1 mb-4">INI DI GANTI</h1>
+                <ol class="breadcrumb justify-content-center mb-0 animated bounceInDown">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-dark" aria-current="page">PARTS</li>
+                </ol>
+            </div>
+        </div>
+        <!-- Hero End -->
+
+
+        <!-- Service Start -->
+        <div class="container-fluid service py-6">
+            <div class="container">
+                <div class="text-center wow bounceInUp" data-wow-delay="0.1s">
+                    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">Our Services</small>
+                    <h1 class="display-5 mb-5">PENYUMBANG DANA</h1>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6 col-sm-12 wow bounceInUp" data-wow-delay="0.1s">
+                        <div class="bg-light rounded service-item">
+                            <div class="service-content d-flex align-items-center justify-content-center p-4">
+                                <div class="service-content-icon text-center">
+                                    <i class="fas fa-compact-disc fa-7x text-primary mb-4" style="transform: rotate(90deg);"></i>
+                                    <h4 class="mb-3">ANODA</h4>
+                                    <p class="mb-4">Anoda pada X-ray berfungsi mengubah energi kinetik elektron menjadi sinar X dan menyebarkan panas yang dihasilkan.</p>
+                                    <a href="#" class="btn btn-primary px-4 py-2 rounded-pill">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 wow bounceInUp" data-wow-delay="0.3s">
+                        <div class="bg-light rounded service-item">
+                            <div class="service-content d-flex align-items-center justify-content-center p-4">
+                                <div class="service-content-icon text-center">
+                                    <i class="fas fa-cube fa-7x text-primary mb-4" style="transform: rotate(45deg);"></i>
+                                    <h4 class="mb-3">CATHODE</h4>
+                                    <p class="mb-4">Katoda pada X-ray memancarkan elektron melalui proses pemanasan untuk diarahkan ke anoda menghasilkan sinar X.</p>
+                                    <a href="#" class="btn btn-primary px-4 py-2 rounded-pill">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 wow bounceInUp" data-wow-delay="0.5s">
+                        <div class="bg-light rounded service-item">
+                            <div class="service-content d-flex align-items-center justify-content-center p-4">
+                                <div class="service-content-icon text-center">
+                                    <i class="fas fa-x-ray fa-7x text-primary mb-4"></i>
+                                    <h4 class="mb-3">Transformator tegangan tinggi.</h4>
+                                    <p class="mb-4">Transformator tegangan tinggi pada X-ray berfungsi untuk mengubah tegangan listrik rendah menjadi tegangan tinggi yang diperlukan untuk mempercepat elektron dalam tabung X-ray.</p>
+                                    <a href="#" class="btn btn-primary px-4 py-2 rounded-pill">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 wow bounceInUp" data-wow-delay="0.7s">
+                        <div class="bg-light rounded service-item">
+                            <div class="service-content d-flex align-items-center justify-content-center p-4">
+                                <div class="service-content-icon text-center">
+                                    <i class="fas fa-layer-group fa-7x text-primary mb-4"></i>  
+                                    <h4 class="mb-3">Rectifier</h4>
+                                    <p class="mb-4">**Rectifier** pada X-ray berfungsi untuk mengubah arus bolak-balik (AC) menjadi arus searah (DC) yang dibutuhkan untuk mengoperasikan tabung X-ray dengan stabil.</p>
+                                    <a href="#" class="btn btn-primary px-4 py-2 rounded-pill">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 wow bounceInUp" data-wow-delay="0.1s">
+                        <div class="bg-light rounded service-item">
+                            <div class="service-content d-flex align-items-center justify-content-center p-4">
+                                <div class="service-content-icon text-center">
+                                    <i class="fas fa-bullseye fa-7x text-primary mb-4"></i>
+                                    <h4 class="mb-3">kolimator</h4>
+                                    <p class="mb-4">Kolimator pada X-ray berfungsi untuk mengarahkan dan membatasi berkas sinar X agar hanya menyinari area yang diinginkan, mengurangi radiasi yang tidak perlu.</p>
+                                    <a href="#" class="btn btn-primary px-4 py-2 rounded-pill">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 wow bounceInUp" data-wow-delay="0.3s">
+                        <div class="bg-light rounded service-item">
+                            <div class="service-content d-flex align-items-center justify-content-center p-4">
+                                <div class="service-content-icon text-center">
+                                    <i class="fas fa-fan fa-7x text-primary mb-4"></i>
+                                    <h4 class="mb-3">pendingin</h4>
+                                    <p class="mb-4">Untuk mencegah overheating pada tabung sinar-X.</p>
+                                    <a href="#" class="btn btn-primary px-4 py-2 rounded-pill">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 wow bounceInUp" data-wow-delay="0.5s">
+                        <div class="bg-light rounded service-item">
+                            <div class="service-content d-flex align-items-center justify-content-center p-4">
+                                <div class="service-content-icon text-center">
+                                    <i class="fas fa-square fa-7x text-primary mb-4"></i>
+                                    <h4 class="mb-3">Panel Detektor</h4>
+                                    <p class="mb-4">Untuk menangkap gambar hasil sinar X</p>
+                                    <a href="#" class="btn btn-primary px-4 py-2 rounded-pill">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 wow bounceInUp" data-wow-delay="0.7s">
+                        <div class="bg-light rounded service-item">
+                            <div class="service-content d-flex align-items-center justify-content-center p-4">
+                                <div class="service-content-icon text-center">
+                                    <i class="fas fa-laptop fa-7x text-primary mb-4"></i>
+                                    <h4 class="mb-3">Sistem Kontrol (Console)</h4>
+                                    <p class="mb-4">Panel kontrol untuk operator mengatur parameter seperti tegangan, arus, waktu eksposur, dan lainnya.</p>
+                                    <a href="#" class="btn btn-primary px-4 py-2 rounded-pill">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Service End -->
+
+
+        <!-- Testimonial Start -->
+        <div class="container-fluid py-6">
+            <div class="container">
+                <div class="text-center wow bounceInUp" data-wow-delay="0.1s">
+                    <small class="d-inline-block fw-bold text-dark text-uppercase bg-light border border-primary rounded-pill px-4 py-1 mb-3">History</small>
+                    <h1 class="display-5 mb-5"> tokoh penting dalam penemuan dan pengembangan sinar X</h1>
+                </div>
+                <div class="owl-carousel owl-theme testimonial-carousel testimonial-carousel-1 mb-4 wow bounceInUp" data-wow-delay="0.1s">
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="img/willhelm rongten.jpg" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">Wilhelm Conrad Roentgen</h4>
+                                <p class="m-0">Profesor Fisika di Universitas Würzburg</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="fs-5 m-0 pt-3">Penemu sinar X pada tahun 1895, yang pertama kali mengamati radiasi ini saat bereksperimen dengan tabung katoda.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="img/marie.jpg" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">Marie Curie</h4>
+                                <p class="m-0">Profesor di Universitas Paris, ahli fisika dan kimia</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="fs-5 m-0 pt-3">Berperan penting dalam penelitian radiasi dan pengembangan teori mengenai radioaktivitas, yang berkontribusi pada pengembangan teknologi sinar-X medis.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="img/pierre.jpg" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">Pierre Curie</h4>
+                                <p class="m-0">Profesor Fisika di Universitas Paris, ahli fisika</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="fs-5 m-0 pt-3">Bersama istrinya, Marie Curie, melakukan penelitian penting tentang radiasi dan membantu mengembangkan teknik-teknik yang relevan dengan sinar-X.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="img/wiliam coolidge.jpg" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">William Coolidge</h4>
+                                <p class="m-0"> Insinyur Elektronik di General Electric</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="fs-5 m-0 pt-3">Mengembangkan tabung X-ray berputar (rotating anode) pada 1913, yang meningkatkan efisiensi produksi sinar-X dengan mengurangi panas yang dihasilkan.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-carousel testimonial-carousel testimonial-carousel-2 wow bounceInUp" data-wow-delay="0.3s">
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="img/Arthur Compton.jpg" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">Arthur H. Compton</h4>
+                                <p class="m-0">Profesor Fisika di Universitas Chicago, fisikawan</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="fs-5 m-0 pt-3">Dikenal karena penemuan efek Compton pada tahun 1923, yang menjelaskan peran interaksi sinar-X dengan materi, berpengaruh besar dalam fisika sinar-X.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="img/Godfrey Hounsfield.jpg" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">Godfrey Hounsfield</h4>
+                                <p class="m-0">Insinyur di EMI Laboratories</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="fs-5 m-0 pt-3">Pengembang CT scan (Computed Tomography) pada 1970-an, menggunakan teknologi sinar-X untuk menghasilkan gambar tiga dimensi tubuh manusia.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="img/max on.jpg" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">Max von Laue</h4>
+                                <p class="m-0">Fisikawan teoretis, Profesor di Universitas Zurich dan Universitas Berlin.</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="fs-5 m-0 pt-3">Menemukan difraksi sinar-X pada kristal (1912), yang membuka jalan untuk analisis struktur atom dalam kristal. Penemuan ini membuatnya dianugerahi Hadiah Nobel Fisika pada tahun 1914.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-item rounded bg-light">
+                        <div class="d-flex mb-3">
+                            <img src="img/alland.jpg" class="img-fluid rounded-circle flex-shrink-0" alt="">
+                            <div class="position-absolute" style="top: 15px; right: 20px;">
+                                <i class="fa fa-quote-right fa-2x"></i>
+                            </div>
+                            <div class="ps-3 my-auto">
+                                <h4 class="mb-0">Allan Cormack</h4>
+                                <p class="m-0">Fisikawan medis, Profesor di Universitas Tufts.</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <!-- <div class="d-flex">
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                                <i class="fas fa-star text-primary"></i>
+                            </div> -->
+                            <p class="fs-5 m-0 pt-3">Berkontribusi pada pengembangan matematika rekonstruksi gambar dalam CT scan, yang memungkinkan interpretasi sinar-X dalam bentuk tiga dimensi. Dia berbagi Hadiah Nobel Fisiologi atau Kedokteran pada tahun 1979 bersama Godfrey Hounsfield.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial End -->
+
+
+        <!-- Footer Start -->
+        <div class="container-fluid footer py-6 my-6 mb-0 bg-light wow bounceInUp" data-wow-delay="0.1s">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h1 class="text-primary">Why we make<span class="text-dark">This</span></h1>
+                            <p class="lh-lg mb-4">Website ini dibuat untuk menyediakan pembelajaran interaktif dan informatif tentang prinsip, proses, dan teknologi pembangkitan sinar-X, guna mendukung pemahaman dan pengembangan keahlian di bidang elektromedis.</p>
+                            <div class="footer-icon d-flex">
+                                <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="btn btn-primary btn-sm-square me-2 rounded-circle"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="btn btn-primary btn-sm-square rounded-circle"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="mb-4">Special Facilities</h4>
+                            <div class="d-flex flex-column align-items-start">
+                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"href="https://tech.snmjournals.org/content/32/3/139"></i>DR MULYATNO</a>
+                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>BANG ADIT</a>
+                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>PAK MAMAN</a>
+                                <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Special ME</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="mb-4">Contact Us</h4>
+                            <div class="d-flex flex-column align-items-start">
+                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i> Jl. Raya Pd. Gede 23-25 Jaktim</p>
+                                <p><i class="fa fa-phone-alt text-primary me-2"></i> 08567901280</p>
+                                <p><i class="fas fa-envelope text-primary me-2"></i> Dwi71301@gmail.com</p>
+                                <p><i class="fa fa-clock text-primary me-2"></i> make with love</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="mb-4">Social Gallery</h4>
+                            <div class="row g-2">
+                                <div class="col-4">
+                                     <img src="img/menu-01.png" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                                </div>
+                                <div class="col-4">
+                                     <img src="img/menu-02.jpg" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                                </div>
+                                <div class="col-4">
+                                     <img src="img/menu-03.png" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                                </div>
+                                <div class="col-4">
+                                     <img src="img/menu-04.png" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                                </div>
+                                <div class="col-4">
+                                     <img src="img/menu-05.png" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                                </div>
+                                <div class="col-4">
+                                     <img src="img/menu-06.png" class="img-fluid rounded-circle border border-primary p-2" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright bg-dark py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Pembangkitan Xray</a>, Made by :Fajar Dwi </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+
+</html>
