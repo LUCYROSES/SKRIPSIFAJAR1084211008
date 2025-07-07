@@ -1,0 +1,208 @@
+
+        :root {
+            --primary: #e77f59;    /* Orange medis */
+            --secondary: #e77f59;   /* Orange tua */
+            --accent: #FFE5CC;      /* Orange pastel */
+        }
+
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            background: #FFF7F2;
+            color: #333;
+        }
+
+        /* Header */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 8rem 1rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .hero {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 12000px;
+            margin: 0 auto;
+        }
+        
+        .logo img {
+            height: 60px;
+        }
+        
+        .jumbotron {
+            text-align: right;
+            color: white;
+        }
+        
+        main.container {
+            margin-top: 120px;
+        }
+        
+        /* RESPONSIVE untuk HP */
+        @media (max-width: 768px) {
+            .hero .container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        
+            .logo img {
+                height: 50px;
+            }
+        
+            .jumbotron {
+                text-align: center;
+            }
+        
+            main.container {
+                margin-top: 160px;
+            }
+        }
+        /* Konten Utama */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Card Jenis Anoda */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Gambar Responsif */
+        .lazy-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .lazy-img.loaded {
+            opacity: 1;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .timeline-item {
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: white;
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+        }
+        /* ini hero 1  */
+        .hero {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .hero .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 2rem;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        main.container {
+            margin-top: 120px;
+        }
+
+        @media (max-width: 600px) {
+            .hero .container {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .header-info {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            main.container {
+                margin-top: 100px;
+            }
+        }
+        /* tambahan */
+       
